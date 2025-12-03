@@ -1,9 +1,0 @@
-# Legacy dataset config kept for backward compatibility with earlier scripts
-# It mirrors `detection_dataset.yaml`.
-path: data/detection
-train: images/train
-val: images/val
-test: images/test
-
-nc: 7
-names: ['bus', 'car', 'motorcycle', 'threewheel', 'truck', 'van', 'plate']
