@@ -3,7 +3,6 @@ from __future__ import annotations
 import yaml
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import List
 
 
 @dataclass
@@ -11,15 +10,11 @@ class OCRConfig:
     """Configuration for OCR reader and preprocessing."""
 
     gpu: bool = False
-    languages: List[str] = field(default_factory=lambda: ["en"])
     min_confidence: float = 0.35
-    resize_factor: float = 2.5
-    contrast_alpha: float = 1.6
-    contrast_beta: int = 0
-    denoise_diameter: int = 7
-    threshold_block_size: int = 25
-    threshold_c: int = 7
-    max_candidates: int = 5
+    crnn_weights: Path = Path("models/crnn.pth")
+    alphabet: str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    crnn_img_height: int = 32
+    crnn_img_width: int = 128
 
 
 @dataclass
@@ -93,6 +88,7 @@ def load_config(path: str | Path = "config.yaml") -> Settings:
     # Ensure paths are Path objects
     app_cfg.plate_patterns_path = Path(app_cfg.plate_patterns_path)
     model_cfg.detector_weights = Path(model_cfg.detector_weights)
+    ocr_cfg.crnn_weights = Path(ocr_cfg.crnn_weights)
     database_cfg.path = Path(database_cfg.path)
 
     return Settings(
